@@ -4,7 +4,7 @@
   "description": "Object-GraphDB-Mapper for Node.js and Neo4j",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha -R spec --growl"
   },
   "repository": {
     "type": "git",

@@ -13,7 +13,8 @@
   "author": "Paul Vencill",
   "license": "BSD",
   "dependencies": {
-    "request": "~2.14.0"
+    "request": "~2.14.0",
+    "underscore": "~1.4.4"
   },
   "devDependencies": {
     "mocha": "~1.8.2",

@@ -4,7 +4,7 @@
     "description":"Object-GraphDB-Mapper for Node.js and Neo4j",
     "main":"lib/index.js",
     "scripts":{
-        "test":"mocha -R spec --growl"
+        "test":"mocha test -r should --growl --reporter spec"
     },
     "repository":{
         "type":"git",

@@ -31,6 +31,4 @@ describe('Db', function () {
 
     });
 
-    
-
 });

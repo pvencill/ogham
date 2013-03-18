@@ -1,6 +1,6 @@
 var Db			= require('../').Db,
-		_				= require('underscore'),
-    should 	= require('should');
+	_			= require('underscore'),
+    should		= require('should');
 
 describe('Query', function(){
 	var db = new Db();
@@ -31,7 +31,8 @@ describe('Query', function(){
 				it('should generate a numeric id on the starts hash', function(){
 					var query = db.Query();
 					query.start('*');
-					query.state.starts.n1.should.eql('*');
+					var keys = _.keys(query.state.starts);
+					query.state.starts[keys[0]].should.eql('*');
 				});
 			});
 
@@ -39,32 +40,45 @@ describe('Query', function(){
 				it('should not add a statement to the starts hash', function(){
 					var query = new db.Query();
 					query.start('jemima');
-					should.not.exist(query.state.starts.n1);
+					var values = _.values(query.state.starts);
+					values.should.not.include('jemima');
 				});
 			});
 		});
 
 	});
 
+	describe('#toCypher', function(){
+		var db = new Db();
+		it('should return a valid simple cypher string with start * values', function(){
+			var query = db.Query();
+			query.start({n1:'*'}).returns('n1');
+			console.log(query.toCypher());
+			query.toCypher().should.eql("START n1=node(*) RETURN n1 ;");
+		});
+
+		it('should return a valid simple cypher string with a number value', function(){
+			var query = db.Query();
+			query.start({n:0}).returns('n');
+			query.toCypher().should.eql("START n=node({ n }) RETURN n ;");
+			query.state.params.n.should.eql(0);
+		});
+	});
+
 	describe('#exec', function(){
-		describe('when called with empty starts hash', function(){
-			var oldSend = db.send;
-
-			before(function(){
-				db.send = function(query){ 
-					var keys = _.keys(query.state.starts);
-					keys.length.should.eql(1);
-					query.state.starts[keys[0]].should.eql('*');
-				};
-			})
-			it('should call db#send with start n=node(*) return n;', function(){
-				var query = db.Query();
-				query.exec();
-			});
-
-			after(function(){
-				db.send = oldSend;
-			})
-		})
+		var db = new Db();
+		// describe('with a valid query object looking for all nodes', function(){
+		// 	var query = db.Query();
+		// 	query.start({n1:'*'}).returns('n1');
+		// 	it('should return a data object including the root node', function(done){
+		// 		query.exec(function(e,result){
+		// 			should.not.exist(e);
+		// 			var rootNode = result.data[0][0];
+		// 			rootNode.should.be.ok;
+		// 			rootNode.should.have.property('self');
+		// 			rootNode.self.should.eql('http://localhost:7474/db/data/node/0');
+		// 		});
+		// 	});
+		// });
 	});
 });

@@ -1,24 +1,24 @@
 {
-    "name":"ogham",
-    "version":"0.0.1",
-    "description":"Object-GraphDB-Mapper for Node.js and Neo4j",
-    "main":"lib/index.js",
-    "scripts":{
-        "test":"mocha test -r should --growl --reporter spec"
-    },
-    "repository":{
-        "type":"git",
-        "url":"https://github.com/pvencill/ogham.git"
-    },
-    "author":"Paul Vencill",
-    "license":"BSD",
-    "dependencies":{
-        "request":"~2.14.0",
-        "underscore":"latest"
-    },
-    "devDependencies":{
-        "mocha":"~1.8.2",
-        "should":"~1.2.2"
-    }
-
+  "name": "ogham",
+  "version": "0.0.1",
+  "description": "Object-GraphDB-Mapper for Node.js and Neo4j",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha test -r should --growl --reporter spec"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pvencill/ogham.git"
+  },
+  "author": "Paul Vencill",
+  "license": "BSD",
+  "dependencies": {
+    "request": "~2.14.0",
+    "underscore": "latest",
+    "handlebars": "~1.0.10"
+  },
+  "devDependencies": {
+    "mocha": "~1.8.2",
+    "should": "~1.2.2"
+  }
 }

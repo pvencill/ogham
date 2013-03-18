@@ -1,5 +1,6 @@
-var Db = require('../').Db,
-    should = require('should');
+var Db			= require('../').Db,
+		_				= require('underscore'),
+    should 	= require('should');
 
 describe('Query', function(){
 	var db = new Db();
@@ -43,5 +44,27 @@ describe('Query', function(){
 			});
 		});
 
+	});
+
+	describe('#exec', function(){
+		describe('when called with empty starts hash', function(){
+			var oldSend = db.send;
+
+			before(function(){
+				db.send = function(query){ 
+					var keys = _.keys(query.state.starts);
+					keys.length.should.eql(1);
+					query.state.starts[keys[0]].should.eql('*');
+				};
+			})
+			it('should call db#send with start n=node(*) return n;', function(){
+				var query = db.Query();
+				query.exec();
+			});
+
+			after(function(){
+				db.send = oldSend;
+			})
+		})
 	});
 });

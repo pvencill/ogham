@@ -54,13 +54,13 @@ describe('Query', function(){
 			var query = db.Query();
 			query.start({n1:'*'}).returns('n1');
 			console.log(query.toCypher());
-			query.toCypher().should.eql("START n1=node(*) RETURN n1 ;");
+			query.toCypher().should.eql("START n1=node(*) RETURN n1;");
 		});
 
 		it('should return a valid simple cypher string with a number value', function(){
 			var query = db.Query();
 			query.start({n:0}).returns('n');
-			query.toCypher().should.eql("START n=node({ n }) RETURN n ;");
+			query.toCypher().should.eql("START n=node({ n }) RETURN n;");
 			query.state.params.n.should.eql(0);
 		});
 	});

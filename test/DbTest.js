@@ -3,6 +3,20 @@ var Db = require('../').Db,
 
 describe('Db', function () {
 
+    beforeEach(function(){
+        var mockNodeSchema = {
+            create: function(){}
+        }
+        var mockRelationshipSchema = {
+            create: function(){}
+        }
+        var mockQuery = {
+            create: function(){}
+        }
+
+        Db.$inject(mockNodeSchema, mockRelationshipSchema, mockQuery)
+    })
+
     describe('#constructor', function () {
 
         it('should work with no arguments', function () {
@@ -25,7 +39,7 @@ describe('Db', function () {
         var db = new Db();
 
         it('should register a new schema', function () {
-            db.NodeSchema('actors');
+            db.CreateNodeSchema('actors');
             db._nodes.should.have.keys('actors');
         });
 

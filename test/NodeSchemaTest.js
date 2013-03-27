@@ -1,4 +1,4 @@
-var NodeSchemaFactory = require('../lib/NodeSchema'),
+var NodeSchema = require('../lib/NodeSchema'),
     should = require('should'),
     _ = require('underscore');
 
@@ -12,7 +12,7 @@ describe('NodeSchema', function(){
         height = "5' 6";
 
     function resetActor(schemaDefinition, opts) {
-        Actor = NodeSchemaFactory(db, 'actors', schemaDefinition, opts);
+        Actor = NodeSchema.create(db, 'actors', schemaDefinition, opts);
     }
 
     describe('#constructor', function(){

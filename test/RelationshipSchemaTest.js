@@ -1,24 +1,24 @@
-var NodeSchema = require('../lib/RelationshipSchema'),
+var RelationshipSchema = require('../lib/RelationshipSchema'),
     should = require('should'),
     _ = require('underscore');
 
-describe('RelationshipSchema', function () {
+describe('NodeSchema', function () {
 
     var db = {};
-    var Actor;
-    var name = 'bob',
-        dob = '12/12/12',
-        weight = 125,
-        height = "5' 6";
+    var ActsIn;
+    var role = 'The Terminator',
+        age = 27,
+        catchphrase = 'Ill be back'
 
-    function resetActor(schemaProperties, schemaRelationships, opts) {
-        Actor = NodeSchema.create(db, 'actors', schemaProperties, schemaRelationships, opts);
+
+    function resetSchema(schemaProperties, opts) {
+        ActsIn = RelationshipSchema.create(db, 'acts_in', schemaProperties, opts);
     }
 
     describe('#create', function () {
         it('throws an error if no db instance is provided', function () {
             function createSchemaWithNoDb() {
-                NodeSchema.create(undefined);
+                RelationshipSchema.create(undefined);
             }
 
             createSchemaWithNoDb.should.throw();
@@ -26,7 +26,7 @@ describe('RelationshipSchema', function () {
 
         it('throws an error if no db schema name is provided', function () {
             function createSchemaWithNoName() {
-                NodeSchema.create({}, '');
+                RelationshipSchema.create({}, '');
             }
 
             createSchemaWithNoName.should.throw();
@@ -35,16 +35,10 @@ describe('RelationshipSchema', function () {
 
     describe('properties', function () {
         beforeEach(function () {
-            resetActor(
-                {
-                    name:String,
-                    dob:Date
-                },
-                undefined,
-                {
-                    strict:true
-                }
-            );
+            resetSchema({
+                role: role,
+                age: age
+            })
         });
 
         it('allows setting of properties in constructor', function () {

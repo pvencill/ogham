@@ -4,7 +4,6 @@
         "$nodeSchema": "./NodeSchema",
         "$relationshipSchema":"./RelationshipSchema",
         "$query":"./Query",
-        "$property":"./Property",
         "$request":"request"
     }
 }

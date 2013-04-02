@@ -1,20 +1,28 @@
 var Db = require('../').Db,
-    should = require('should');
+    should = require('should'),
+    sinon = require('sinon'),
+    _ = require('underscore');
 
 describe('Db', function () {
+    var mockNodeSchema,
+        mockRelationshipSchema,
+        mockQuery,
+        db;
 
     beforeEach(function(){
-        var mockNodeSchema = {
+        mockNodeSchema = {
+            create: sinon.stub().returns(function(){})
+        }
+        mockRelationshipSchema = {
             create: function(){}
         }
-        var mockRelationshipSchema = {
-            create: function(){}
-        }
-        var mockQuery = {
+        mockQuery = {
             create: function(){}
         }
 
         Db.$inject(mockNodeSchema, mockRelationshipSchema, mockQuery)
+
+        db = new Db();
     })
 
     describe('#constructor', function () {
@@ -35,14 +43,31 @@ describe('Db', function () {
 
     });
 
-    describe('#NodeSchema', function () {
+    describe('#createNodeSchema', function () {
         var db = new Db();
 
-        it('should register a new schema', function () {
-            db.CreateNodeSchema('actors');
-            db._nodes.should.have.keys('actors');
+        it('calls the NodeSchema factory create method with correct arguments', function(){
+            var definition = {},
+                opts = {}
+            db.createNodeSchema('actors', definition, opts);
+
+            mockNodeSchema.create.calledWith(db,'actors', definition, _.defaults(opts, db.options)).should.be.ok;
         });
 
+        it('returns the Schema constructor', function(){
+            var ReturnedSchema = db.createNodeSchema('actors');
+            var CreatedSchema = mockNodeSchema.create(db, 'actors');
+
+            ReturnedSchema.should.equal(CreatedSchema);
+        });
+    });
+
+    describe('#getNodeSchmea', function(){
+        it('retrieves created schemas', function(){
+            var Schema = db.createNodeSchema('actors');
+
+            db.getNodeSchema('actors').should.equal(Schema);
+        });
     });
 
 });
